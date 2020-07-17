@@ -21,13 +21,13 @@ select * from userdata; -- this can be used to view the seleted table
 create table people(first_name varchar(20) ,last_name varchar(20),age int not null default 0); -- set default value for age incase of no entry
 
 create table employees(
-id int not null auto_increment,
-last_name varchar(255) not null,
-first_name varchar(255) not null,
-middle_name varchar(255),
-age int not null,
-current_status varchar(255) not null default 'employed',
-primary key(id)
+	id int not null auto_increment,
+    last_name varchar(255) not null,
+    first_name varchar(255) not null,
+    middle_name varchar(255),
+    age int not null,
+    current_status varchar(255) not null default 'employed',
+    primary key(id)
 ); -- sample for creating a new table
 
 -- WHERE clauses example
@@ -44,68 +44,68 @@ SELECT name AS 'cat name', breed AS 'kitty breed' FROM cats;
 
 -- CRUD operations
 
--- Read operation
+	-- Read operation
 select id, current_status, age from employees; -- Reads the specific columns in the same order mentioned
 
--- Update operation
+	-- Update operation
 update employees set middle_name = "kotivada" where id = 2;
 update employees set current_status='Associates' where current_status='Associate';
 
--- Delete operation
+	-- Delete operation
 delete from employees; -- This will delete complete data from the table
 delete from employees where id = 3 and age = 19;
 
 -- Sting functions
--- CONCAT
+	-- CONCAT
 select concat(author_fname,' ',author_lname) as 'full name' from books; -- concats 2 strings/values from different columns
 select author_fname as fname, author_lname as lname, concat(author_fname,',',author_lname) as 'fullname' from books;
 select concat_ws('-',author_fname,author_lname,title,released_year) from books; -- concat with seperator, provide the seperator at the beginning and it gets concatinated for all the column values.
 
--- SUBSTRING - in mysql, indexes start from 1. where as 0 for other languages.
+	-- SUBSTRING - in mysql, indexes start from 1. where as 0 for other languages.
 select substring(author_fname, 1,5) as one, substring(author_lname, 1, 6) as two from books; -- selecting string between specific indexes.
 select author_fname as fname ,substring(author_fname,-3) from books; -- selecting indexes from reverse and starts from -1
 
--- REPLACE ('string', 'select what to replace from string', 'with what the string to be replaced')
-SELECT REPLACE('Hello World', 'l', '7');
-select age, replace(first_name, 'a', '143') from people; -- here i have tried to replace all 'a' in 'first_name' with 143
+	-- REPLACE ('string', 'select what to replace from string', 'with what the string to be replaced')
+ SELECT REPLACE('Hello World', 'l', '7');
+ select age, replace(first_name, 'a', '143') from people; -- here i have tried to replace all 'a' in 'first_name' with 143
 
--- REVERSE
-SELECT REVERSE('Hello World');
-select reverse(last_name) from employees;
-select concat(last_name, ' ' , reverse(last_name)) as reverse from employees;
+	-- REVERSE
+ SELECT REVERSE('Hello World');
+ select reverse(last_name) from employees;
+ select concat(last_name, ' ' , reverse(last_name)) as reverse from employees;
 
--- CHAR_LENGTH
+	-- CHAR_LENGTH
 select last_name, character_length(last_name) from employees;
 select last_name,
-concat(
-last_name,' is ', character_length(last_name), ' long'
-) from employees;
+	concat(
+		last_name,' is ', character_length(last_name), ' long'
+	) from employees;
 
--- UPPER and LOWER CASE
+    -- UPPER and LOWER CASE
 select upper(last_name) as uppername from employees;
 select
-concat(
-'My name is ', ' ', upper(last_name)
-) as uppername from employees;
+	concat(
+	'My name is ', ' ', upper(last_name)
+	) as uppername from employees;
 
--- Multiple string concatination
-select age,
-reverse(
-concat(
-replace(first_name, 'a', '143'), 1,4
-))as updated_name from people;
+	-- Multiple string concatination
+ select age,
+ reverse(
+    concat(
+		replace(first_name, 'a', '143'), 1,4
+	))as updated_name from people;
 
 SELECT
-SUBSTRING(REPLACE(title, 'e', '3'), 1, 10) AS 'weird string'
+    SUBSTRING(REPLACE(title, 'e', '3'), 1, 10) AS 'weird string'
 FROM books;
 
 -- DISTINCT Statement - Inside a table, a column often contains many duplicate values; and sometimes you only want to list the different (distinct) values.
--- So, if a value is present twice it returns only once.
+					-- So, if a value is present twice it returns only once.
 select distinct author_lname from books;
 
 -- ORDER BY -  The ORDER BY keyword is used to sort the result-set in ascending or descending order.
--- The ORDER BY keyword sorts the records in ascending order by default. To sort the records in descending order, use the DESC keyword.
--- Its Alpha numeric sorting.
+			-- The ORDER BY keyword sorts the records in ascending order by default. To sort the records in descending order, use the DESC keyword.
+            -- Its Alpha numeric sorting.
 select title from books order by title;
 select title, author_lname, released_year from books order by released_year;
 select title, author_lname, released_year from books order by 2; -- here 2 referes to 'author_lname'
@@ -114,19 +114,19 @@ select author_lname, title from books order by title desc;
 -- LIMIT - MySQL provides a LIMIT clause that is used to specify the number of records to return.
 select * from books limit 5; -- Return 5 items from the table
 select * from books limit 3, 5; -- here 3 is the start index of the row and 5 is number elements to return from index 3;
--- In my SQL 1st row index of the table is 0
+								-- In my SQL 1st row index of the table is 0
 
 -- LIKE - The LIKE operator is used in a WHERE clause to search for a specified pattern in a column.
--- There are two wildcards often used in conjunction with the LIKE operator:
--- % - The percent sign represents zero, one, or multiple characters
--- _ - The underscore represents a single character
+		-- There are two wildcards often used in conjunction with the LIKE operator:
+				-- % - The percent sign represents zero, one, or multiple characters
+				-- _ - The underscore represents a single character
 select * from books;
 select book_id, author_lname from books where author_lname like 'lahiri'; -- If are sure about the string we can use directly
 select book_id, author_lname from books where author_lname like '%ah%'; -- If you arent pretty sure of string, search with partial characters
 select book_id, author_lname from books where author_lname like '_ah%';
 select book_id, author_lname from books where author_lname like '____ri%'; -- here each '_' represents one character
 select book_id, author_lname from books where author_lname like '_a_i_i'; -- random characters match is also possible
--- Now hoe do we select % or _ from a text
+	-- Now hoe do we select % or _ from a text
 select title from books where title like '%\%%'; -- here '\' is an escape character
 select title from books where title like '%\_%'; -- here '\' is an escape character
 ----------------------------------------------------
