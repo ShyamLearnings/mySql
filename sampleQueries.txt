@@ -129,4 +129,9 @@ select book_id, author_lname from books where author_lname like '_a_i_i'; -- ran
 	-- Now hoe do we select % or _ from a text
 select title from books where title like '%\%%'; -- here '\' is an escape character
 select title from books where title like '%\_%'; -- here '\' is an escape character
-----------------------------------------------------
+
+-- COUNT - The COUNT() function returns the number of records returned by a select query.
+SELECT COUNT(*) FROM books;
+select count(author_lname) from books;
+select count(distinct author_lname) from books;
+SELECT COUNT(DISTINCT author_lname, author_fname) FROM books; -- This returns distinct elements for both columns
