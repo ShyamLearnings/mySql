@@ -14,7 +14,7 @@ show columns from userdata; -- returns all the columns for selected table name
 
 DESC myapp.userdata;-- returns all the columns for selected table name
 
-insert into userdata(username,password) values ('chandu','test@233'),('mammu','test@998'); -- used to insert new rows into the table
+insert into userdata(username,password) values ('Ram','test@233'),('mammu','test@998'); -- used to insert new rows into the table
 
 select * from userdata; -- this can be used to view the seleted table
 
@@ -33,7 +33,7 @@ create table employees(
 -- WHERE clauses example
 
 select * from employees where age = 25; -- where clause can be used whenever we need something specific from tables & its case insensitive
-select last_name, id, age from employees where last_name in ( 'chandu','shyam'); -- passing multiple keys to match from the list
+select last_name, id, age from employees where last_name in ( 'Ram','shyam'); -- passing multiple keys to match from the list
 select id, age, last_name from employees where age = 21;-- where clause can be used whenever we need something specific from tables & its case insensitive
 
 -- ALIAS Names
@@ -135,3 +135,33 @@ SELECT COUNT(*) FROM books;
 select count(author_lname) from books;
 select count(distinct author_lname) from books;
 SELECT COUNT(DISTINCT author_lname, author_fname) FROM books; -- This returns distinct elements for both columns
+
+-- GROUP_BY - The GROUP BY statement groups rows that have the same values into summary rows, like "find the number of customers in each country".
+			-- The GROUP BY statement is often used with aggregate functions (COUNT, MAX, MIN, SUM, AVG) to group the result-set by one or more columns.
+select title, released_year from books group by released_year;
+select title, released_year,count(released_year) from books group by released_year;
+select title, released_year,count(released_year) from books group by released_year, author_lname; -- Return more unique data
+select concat('In', released_year,count(*),' ','books are released') from books group by released_year;
+SELECT CONCAT('In ', released_year, ' ', COUNT(released_year), ' book(s) released') AS year FROM books GROUP BY released_year;
+select COUNT(*)  from books;
+show columns from books;
+
+-- MIN and MAX
+select * from books;
+select min(released_year) from books;
+select title, min(released_year) from books;
+select max(released_year) from books;
+select title, author_fname from books where pages=(
+	select min(pages) from books
+); -- SUB Queries
+select author_fname, min(released_year) from books group by author_fname;
+select max(pages), author_fname from books group by author_fname;
+
+-- SUM
+select * from books;
+select sum(pages) from books;
+select author_fname, sum(pages) from books group by author_fname;
+
+-- AVG
+select avg(pages) from books;
+select author_fname, avg(stock_quantity) from books group by released_year;
