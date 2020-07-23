@@ -1,0 +1,18 @@
+-- Difference between CHAR and VARCHAR - Its good to use CHAR(More performance),if we are sure of the exact length of the string.
+create table testdata(
+	name char(4),
+    commnet varchar(4)
+);
+insert into testdata(name, commnet) values('hi  ', 'hi  '); -- VARCHAR allocates 4 bits of memory incusing space
+															-- Where as CHAR allocates only 2 bits of memory by trimming extra space
+select * from testdata;
+select length(name) as name, length(commnet) as comment from testdata;
+
+--What is the difference between MySQL DATETIME and TIMESTAMP data type?
+Both the data types store data in “YYYY-MM-DD HH:MM:SS” format and include date as well as time. In spite of these similarities they are having the following differences −
+
+Range − Datetime data type supports a date along with time in the range between 1000-01-01 00:00:00 and 9999-12-31 23:59:59. But timestamp data type supports a date along with time in the range between ‘1970-01-01 00:00:01’ to ‘2038-01-19 08:44:07’.
+Size − Datetime requires 5 bytes along with 3 additional bytes for fractional seconds’ data storing. On the other hand, timestamp datatype requires 4 bytes along with 3 additional bytes for fractional seconds’ data storing. But before MySQL 5.6.4, DateTime requires 8 bytes along with 3 additional bytes for fractional seconds’ data storing.
+Conversion from one timezone to other − Actually in MySQL5+, timestamp value converts from current time to UTC and vice-versa while datetime does not do any conversion.
+Indexing − Indexing can be done on timestamp data but datetime data cannot be indexed.
+Caching of query − queries having timestamp datatype can be cached but queries having datetime datatype cannot be cached.

@@ -165,3 +165,102 @@ select author_fname, sum(pages) from books group by author_fname;
 -- AVG
 select avg(pages) from books;
 select author_fname, avg(stock_quantity) from books group by released_year;
+
+-- DATA TYPES
+
+    -- FLOAT,
+CREATE TABLE thingies (price FLOAT);
+INSERT INTO thingies(price) VALUES (88.45);
+SELECT * FROM thingies;
+    -- DOUBLE,
+
+    -- DECIMAL - The first argument is precision, which is the number of total digits.
+			   -- The second argument is scale which is the maximum number of digits to the right of the decimal point.
+create table decimaltyp2(
+    salary3 decimal(5,2)
+);
+insert into datatype(salary3) values('123.1');
+select * from decimaltyp2;
+
+	-- Date & Time
+create table birthdays(
+	name varchar(100),
+    birthdate date,
+    birthtime time,
+    birthdt	datetime
+);
+select * from birthdays;
+insert into birthdays(name, birthdate, birthtime, birthdt)
+			   values('shyam', '1995-10-10','10:12:19','1995-10-10 10:12:19');
+insert into birthdays(name, birthdate, birthtime, birthdt)
+			   values('ram', current_date(), current_time(), now());
+select name, dayname(birthdate) from birthdays; -- Find day name of birthdate
+select birthdate, dayofmonth(birthdate) from birthdays;
+select birthdate, dayofweek(birthdate) from birthdays; -- To find which day from the week. Ex : sunday - 1, monday - 2
+select birthdate, dayofyear(birthdate) from birthdays;
+select birthdate, week(birthdate) from birthdays; -- Extract number of week for selected column
+select birthdate, year(birthdate) from birthdays; -- Extract year for selected column
+select birthdt, minute(birthdt) from birthdays; -- Extract Minute from column
+select birthdt, hour(birthdt) from birthdays; -- Extract hour from column
+select birthdt, second(birthdt) from birthdays; -- Extract seconds from column
+	-- DATE FORMATER - DIfferent more formatter are available in sql site
+select name, birthdt, date_format(birthdt,'%D %M %Y') from birthdays; -- Format the date in which ever format we like
+select name,birthdt, date_format(birthdt,'%H : %i : %S : %p') from birthdays; -- Grabbing time from column
+	-- DATE MATH - We can add Months, years, Time anything to the data. More infor provided in MYSQL site under date and time functions
+select datediff('1995-10-10 10:12:19', '1995-10-02'); -- Returns difference between dates
+select datediff(now(), birthdt) from birthdays;
+select birthdt, date_add(birthdt, interval 1 month) from birthdays;-- Adds one month to the date in table using INTERVAL KEYWORD
+select birthdt, birthdt + interval 1 month from birthdays; -- This also works same as above
+select birthdt, date_sub(birthdt, interval 1 month) from birthdays;
+select birthdt, date_add( date_add(birthdt, interval 1 month ), interval 10 hour) from birthdays; -- Adding date and time to the data
+select birthdt, birthdt + interval 1 month + interval 10 hour from birthdays;
+
+	-- TIMESTAMPS
+create table comments(
+	content varchar(255),
+    created_at timestamp default now()
+);
+insert into comments(content) values('shyam was very funny!!');
+select * from comments;
+create table comments2(
+	content varchar(255),
+    created_at timestamp default now() on update now() -- This means when ever there is an update on content it updates the current timestamp
+);
+insert into comments2(content) values('praveen was very funny!!');
+select * from comments2;
+update comments2 set content =  'Ram is terrible!!' where content = 'praveen was very funny!!';-- Updated the data with latest timestamp
+
+-- Logical Operators
+	-- NOT EQUAL TO OPERATOR - works opposite to EQUALS OPERATOR
+select title, author_fname from books where author_fname != 'Dave'; -- Returns all the columns which are not equal to 'Dave'
+	-- NOT LIKE OPERATOR - works opposite to LIKE OPERATOR
+select title, author_fname from books where author_fname not like '%av%'; -- Returns all the columns which are not like 'av'
+	-- GREATER THAN OPERATOR
+select title, released_year from books where released_year > 2000;
+	-- GREATER THAN OR EQUAL OPERATOR
+select title, released_year from books where released_year >=  2013;
+select title, released_year from books where length(title) >=  25;
+	-- Exercise on Greater than
+select 100>5; -- Returns 1, which means true
+select -15>15; -- Returns 0, which means false
+select 1<1; -- Returns 0, which means false
+select 1>1; -- Returns 0, which means false
+select 'a'<'b';
+select 'a'<'A'; -- Returns 0, which means false.In my sql string comparisions are not case sensitive
+select 'a'<='A'; -- Returns 1, which means both are same
+
+	-- AND OPERATOR (&& or AND)
+select author_fname, released_year from books where author_fname = 'Dave' &&  released_year = 2012;
+select author_fname, released_year from books where author_fname = 'Dave' AND  released_year = 2012;
+	-- OR OPERATOR (|| or OR)
+select author_fname, released_year from books where author_fname = 'Dave' ||  released_year = 2012;
+select author_fname, released_year from books where author_fname = 'Dave' OR  released_year = 2012;
+	-- BETWEEN and NOT BETWEEN OPERATOR
+select title, released_year from books where released_year between 2005 and 2010;
+select title, released_year from books where released_year >= 2005 &&  released_year <=2010; -- Works same as above
+select title, released_year from books where released_year not between 2005 and 2010;
+	-- IN OPERATOR
+select author_fname, released_year from books where author_fname in ('Dave','neil'); -- Helps in finding multiple rows from same column
+-- NOT IN OPERATOR
+select author_fname, released_year from books where author_fname not in ('Dave','neil');
+-------------------------------------------------------
