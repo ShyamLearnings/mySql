@@ -1,0 +1,17 @@
+show databases; -- lists out all the databases/schemas
+
+create DATABASE myApp; -- For creating a new DB/Schema
+
+drop database myApp; -- For deleting a new DB/Schema
+
+use myApp; -- selects which database to use
+
+select database(); -- returns which DB we are currently using or poiting to
+
+show tables;-- returs all the list of tables inside the seleted schema
+
+show columns from userdata; -- returns all the columns for selected table name
+
+DESC myapp.userdata;-- returns all the columns for selected table name
+
+select * from userdata; -- this can be used to view the selected table

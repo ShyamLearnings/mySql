@@ -1,0 +1,28 @@
+-- CRUD operations
+	-- CREATE OPERATION
+create table employees(
+	id int not null auto_increment,
+    last_name varchar(255) not null,
+    first_name varchar(255) not null,
+    middle_name varchar(255),
+    age int not null,
+    current_status varchar(255) not null default 'employed',
+    primary key(id)
+); -- sample for creating a new table
+
+	-- INSERT OPERATION
+insert into employees(last_name, first_name, middle_name, age,current_status)
+	values('shyam', 'kumar', 'kotivada',25,default),
+		  ('praveen','ram', 'koti',29,'Associate'),
+		  ('venkat','rao','legend',40,default);
+
+	-- Read operation
+select id, current_status, age from employees; -- Reads the specific columns in the same order mentioned
+
+	-- Update operation
+update employees set middle_name = "kotivada" where id = 2;
+update employees set current_status='Associates' where current_status='Associate';
+
+	-- Delete operation
+delete from employees where id = 3 and age = 40;
+delete from employees; -- This will delete complete data from the table
