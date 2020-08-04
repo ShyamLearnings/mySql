@@ -360,4 +360,13 @@ CREATE TABLE orders(
         ON DELETE CASCADE -- In case if ou want to delete any customer from customers table it automatically deletes the records in orders table.
 );
 -- ON UPDATE CASCADE
+
+-- CASE STATEMENT
+select
+	case
+		when email like '%yahoo%' then 'yahoo'
+        when email like '%gmail%' then 'gmail'
+        else 'others'
+		end as provider, count(*)
+from users1 group by provider;
 ------------------------------------------------------
