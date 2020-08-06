@@ -1,0 +1,14 @@
+A trigger is a set of actions that are run automatically when a specified change operation (SQL INSERT, UPDATE, or DELETE statement)
+is performed on a specified table. Triggers are useful for tasks such as enforcing business rules, validating input data, and
+keeping an audit trail.
+
+Uses for triggers:
+
+Enforce business rules
+Validate input data
+Generate a unique value for a newly-inserted row in a different file.
+Write to other files for audit trail purposes
+Query from other files for cross-referencing purposes
+Access system functions
+Replicate data to different files to achieve data consistency
+

@@ -1,0 +1,58 @@
+CREATE database trigger_demo;
+use trigger_demo;
+select database();
+
+create table users(
+	username varchar(100),
+    age int
+);
+
+create table users_audit(
+	name varchar(100),
+    created_at timestamp default now()
+);
+
+show tables;
+
+insert into users(username, age)
+	values('shyam', '25'),('Ram', '20');
+
+select * from users;
+
+Delimiter %
+create trigger checkUserAge
+	before insert on users for each row
+    begin
+		if new.age < 21
+        then
+			signal sqlstate '45000'
+				set message_text = 'User Must have a minimum age of 21';
+        end if;
+     end %
+delimiter ;
+
+show triggers;
+insert into users(username, age)
+	values('sita', 25);  -- It will throw an error as the trigger is applied
+
+
+-- Create a trigger which logs all the users registrations timestamp for audit log
+	-- When ever new user registers we trigger a query to pull the data and create timestamp along with his name
+delimiter $
+create trigger auditData
+	after insert on users for each row
+    begin
+		insert into users_audit(name) values(new.username);
+    end $
+delimiter ;
+
+insert into users(username, age)
+	values('sqll', 31); -- After this user is user is inserted check the data in users_audit table
+
+select * from users_audit;
+
+drop trigger auditData; -- To delete the trigger
+drop database trigger_demo;
+
+
+
