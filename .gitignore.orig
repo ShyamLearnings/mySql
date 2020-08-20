@@ -1,0 +1,7 @@
+.idea
+<<<<<<< HEAD
+*.logs
+=======
+*.logssssss
+>>>>>>> updates
+.gitignore.orig
